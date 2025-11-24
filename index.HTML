@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo OSI Profesional Interactivo</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f0f4f8; color:#333; line-height:1.6; }
+header { background:#0d47a1; color:white; padding:20px; text-align:center; position:sticky; top:0; z-index:1000; }
+header h1 { font-size:2rem; }
+nav { display:flex; justify-content:center; flex-wrap:wrap; position:sticky; top:70px; background:#1976d2; z-index:1000; }
+nav button { margin:5px; padding:10px 15px; border:none; border-radius:8px; cursor:pointer; background:#42a5f5; color:white; transition:0.3s; }
+nav button:hover { background:#1565c0; transform: scale(1.05); }
+
+main { padding:20px; display:flex; flex-direction:column; align-items:center; }
+
+.intro { max-width:800px; margin-bottom:30px; text-align:justify; }
+.intro h2 { color:#0d47a1; margin-bottom:15px; text-align:center; }
+
+.capa-card {
+  width:90%; max-width:700px; margin:15px 0; padding:20px;
+  border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.2);
+  cursor:pointer; position: relative; transition: transform 0.3s;
+}
+.capa-card:hover { transform: translateY(-5px); }
+
+.capa-title { font-size:1.5rem; margin-bottom:10px; display:flex; align-items:center; }
+.capa-title img { width:30px; height:30px; margin-right:10px; }
+
+.capa-content { display:none; margin-top:10px; font-size:1rem; }
+
+.data-flow { width:90%; max-width:700px; height:50px; margin:20px auto; position:relative; }
+.packet { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; position:absolute; left:0; top:0; transition:all 1s ease; }
+
+.quiz { margin-top:10px; background:#e3f2fd; padding:15px; border-radius:10px; display:none; }
+
+footer { background:#0d47a1; color:white; text-align:center; padding:15px; margin-top:20px; }
+
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:2000; }
+.modal-content { background:white; padding:25px; border-radius:12px; max-width:600px; width:90%; position:relative; }
+#closeModal { position:absolute; top:10px; right:10px; background:#0d47a1; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; }
+#closeModal:hover { background:#1565c0; }
+button.option { margin:5px; padding:8px 12px; border-radius:6px; border:none; cursor:pointer; transition:0.3s; }
+button.option:hover { background:#1976d2; color:white; }
+
+.progress-bar { height:10px; background:#90caf9; border-radius:5px; margin-top:5px; overflow:hidden; }
+.progress-fill { width:0%; height:100%; background:#1565c0; transition:width 0.5s; }
+
+.error { color:red; font-weight:bold; }
+.score { font-weight:bold; color:#0d47a1; margin-top:10px; }
+
+</style>
+</head>
+<body>
+
+<header><h1>Modelo OSI Profesional Interactivo</h1></header>
+
+<nav>
+  <button data-capa="intro">Introducción</button>
+  <button data-capa="1">Capa Física</button>
+  <button data-capa="2">Capa Enlace</button>
+  <button data-capa="3">Capa Red</button>
+  <button data-capa="4">Capa Transporte</button>
+  <button data-capa="5">Capa Sesión</button>
+  <button data-capa="6">Capa Presentación</button>
+  <button data-capa="7">Capa Aplicación</button>
+  <button id="startFlow">Simular flujo completo</button>
+</nav>
+
+<main>
+<div class="intro" id="intro">
+  <h2>Introducción al Modelo OSI</h2>
+  <p>El <strong>Modelo OSI (Open Systems Interconnection)</strong> organiza las funciones de comunicación en siete capas, facilitando interoperabilidad, diagnóstico y aprendizaje sobre redes. Cada capa tiene funciones específicas desde la transmisión física hasta la interacción con aplicaciones del usuario.</p>
+  <p>Conocerlo es esencial para redes, seguridad y desarrollo de protocolos.</p>
+</div>
+
+<div class="data-flow" id="dataFlow"></div>
+
+<!-- Capas -->
+<div class="capa-card" id="capa1" style="background:#ffccbc;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/cable.png"/> Capa Física</div>
+  <div class="capa-content">
+    <p>Transmisión de bits por medios físicos. Ej.: Ethernet, Wi-Fi, fibra óptica.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué dispositivo opera en esta capa?</p>
+      <button class="option" data-answer="correct">Repetidor</button>
+      <button class="option" data-answer="wrong">Router</button>
+      <button class="option" data-answer="wrong">Switch</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="capa-card" id="capa2" style="background:#ffe082;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/networking.png"/> Capa Enlace</div>
+  <div class="capa-content">
+    <p>Transferencia confiable entre nodos. Ej.: Ethernet, MAC, switches.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué identifica un dispositivo en esta capa?</p>
+      <button class="option" data-answer="correct">Dirección MAC</button>
+      <button class="option" data-answer="wrong">IP</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="capa-card" id="capa3" style="background:#80deea;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/internet.png"/> Capa Red</div>
+  <div class="capa-content">
+    <p>Determina la ruta de los datos. Ej.: IP, routers.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué protocolo opera en esta capa?</p>
+      <button class="option" data-answer="correct">IP</button>
+      <button class="option" data-answer="wrong">TCP</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="capa-card" id="capa4" style="background:#c5e1a5;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/data-transfer.png"/> Capa Transporte</div>
+  <div class="capa-content">
+    <p>Entrega correcta de datos con control de flujo y errores. Ej.: TCP, UDP.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué protocolo proporciona control de errores?</p>
+      <button class="option" data-answer="correct">TCP</button>
+      <button class="option" data-answer="wrong">UDP</button>
+      <p class="feedback"></p>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="tcpProgress"></div></div>
+    <p class="error" id="tcpError"></p>
+  </div>
+</div>
+
+<div class="capa-card" id="capa5" style="background:#f48fb1;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/dialog.png"/> Capa Sesión</div>
+  <div class="capa-content">
+    <p>Gestiona sesiones entre aplicaciones.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué función principal realiza?</p>
+      <button class="option" data-answer="correct">Mantener y finalizar sesiones</button>
+      <button class="option" data-answer="wrong">Encriptar datos</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="capa-card" id="capa6" style="background:#d1c4e9;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/coding.png"/> Capa Presentación</div>
+  <div class="capa-content">
+    <p>Traduce, cifra y comprime datos. Ej.: SSL/TLS, JPEG, ASCII.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué se realiza en esta capa?</p>
+      <button class="option" data-answer="correct">Cifrado y traducción de datos</button>
+      <button class="option" data-answer="wrong">Direccionamiento físico</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="capa-card" id="capa7" style="background:#ffcc80;">
+  <div class="capa-title"><img src="https://img.icons8.com/ios-filled/50/000000/application-window.png"/> Capa Aplicación</div>
+  <div class="capa-content">
+    <p>Proporciona servicios de red a aplicaciones. Ej.: HTTP, FTP, SMTP.</p>
+    <div class="quiz">
+      <p>Pregunta: ¿Qué interactúa directamente con esta capa?</p>
+      <button class="option" data-answer="correct">Aplicaciones del usuario</button>
+      <button class="option" data-answer="wrong">Router</button>
+      <p class="feedback"></p>
+    </div>
+  </div>
+</div>
+
+<div class="score">Puntuación: <span id="scoreValue">0</span>/7</div>
+
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button id="closeModal">Cerrar</button>
+    <div id="modalText"></div>
+  </div>
+</div>
+
+<footer>&copy; 2025 Modelo OSI Profesional Interactivo</footer>
+
+<script>
+// Variables globales
+const cards = document.querySelectorAll('.capa-card');
+const packetContainer = document.getElementById('dataFlow');
+let score = 0;
+
+// Mostrar/ocultar contenido
+cards.forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const content = card.querySelector('.capa-content');
+    content.style.display = (content.style.display==='block') ? 'none' : 'block';
+    const quiz = card.querySelector('.quiz');
+    if(quiz) quiz.style.display = content.style.display;
+  });
+});
+
+// Modal doble click
+const modal = document.getElementById('modal');
+const modalText = document.getElementById('modalText');
+const closeModal = document.getElementById('closeModal');
+cards.forEach(card=>{
+  card.addEventListener('dblclick', ()=>{
+    modalText.innerHTML = `<h2>${card.querySelector('.capa-title').textContent}</h2>` + card.querySelector('.capa-content').innerHTML + `<p>Más info: <a href="https://es.wikipedia.org/wiki/Modelo_OSI" target="_blank">Wikipedia OSI</a></p>`;
+    modal.style.display='flex';
+  });
+});
+closeModal.addEventListener('click', ()=>{ modal.style.display='none'; });
+
+// Quizzes con puntuación
+const options = document.querySelectorAll('button.option');
+options.forEach(opt=>{
+  opt.addEventListener('click', ()=>{
+    const feedback = opt.parentElement.querySelector('.feedback');
+    if(opt.dataset.answer==='correct'){
+      feedback.textContent = "✅ Correcto!";
+      feedback.style.color='green';
+      score++;
+      document.getElementById('scoreValue').textContent = score;
+      opt.parentElement.querySelectorAll('button.option').forEach(b=>b.disabled=true);
+    } else {
+      feedback.textContent = "❌ Incorrecto";
+      feedback.style.color='red';
+    }
+  });
+});
+
+// Animación flujo de paquetes múltiple
+const layerIds = ['capa1','capa2','capa3','capa4','capa5','capa6','capa7'];
+const tcpProgress = document.getElementById('tcpProgress');
+const tcpError = document.getElementById('tcpError');
+
+document.getElementById('startFlow').addEventListener('click', async ()=>{
+  score=0;
+  document.getElementById('scoreValue').textContent=score;
+  tcpProgress.style.width='0%';
+  tcpError.textContent='';
+  packetContainer.innerHTML='';
+  // Crear 3 paquetes
+  for(let p=0;p<3;p++){
+    const pkt = document.createElement('div');
+    pkt.className='packet';
+    pkt.textContent='D';
+    packetContainer.appendChild(pkt);
+
+    for(let i=0;i<layerIds.length;i++){
+      const layer = document.getElementById(layerIds[i]);
+      const rect = layer.getBoundingClientRect();
+      pkt.style.top=(rect.top + window.scrollY - 60)+'px';
+      pkt.style.left='0px';
+      await new Promise(r=>setTimeout(r,800));
+
+      const content = layer.querySelector('.capa-content');
+      content.style.display='block';
+      const quiz = layer.querySelector('.quiz');
+      if(quiz) quiz.style.display='block';
+
+      // Simulación error en capa 4
+      if(layerIds[i]==='capa4'){
+        tcpProgress.style.width='50%';
+        tcpError.textContent='⚠ Retransmisión detectada';
+        await new Promise(r=>setTimeout(r,400));
+        tcpProgress.style.width='100%';
+        await new Promise(r=>setTimeout(r,400));
+        tcpError.textContent='';
+      }
+    }
+    await new Promise(r=>setTimeout(r,500));
+  }
+});
+
+</script>
+
+</body>
+</html>
